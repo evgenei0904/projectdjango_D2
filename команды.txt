@@ -1,0 +1,80 @@
+from news.models import *
+u1=User.objects.create_user(username='Evgenei')
+u2=User.objects.create_user(username='Maria') 
+Author.objects.create(authorUser=u1) 
+Author.objects.create(authorUser=u2)
+author1 = Author.objects.get(id=1) 
+author2 = Author.objects.get(id=2) 
+
+Category.objects.create(name='IT')
+Category.objects.create(name='Политика') 
+Category.objects.create(name='Хобби') 
+Category.objects.create(name='Авто') 
+
+Post.objects.create(author=author2, categoryType='AR', title='Что такое RnD?', text='Центр компетенций RnD (Research and Development) — это структура, которая ищет, фильтрует и анализирует инициативы в индустрии и внутри компании. А также превращает их в гипотезы, ставит задачи по реализации и курирует весь процесс.')
+
+Post.objects.create(author=author2, categoryType='AR', title='Хобби: разбор понятия', text='Хобби для человека представляет собой увлекательный процесс любимым делом, в котором он способен морально отдохнуть и получить удовольствие, и в целом провести время с пользой. У всех людей может быть хобби, однако не все способны пробовать что-то новое, если однажды попытка заняться каким-нибудь необычным делом не принесла радости или результата. Здесь необходимо сразу подчеркнуть, что хобби не должно быть самоцелью у индивида или быть направленным только на конечный итог.')
+
+Post.objects.create(author=author1, categoryType='NW', title='Сотрудникам General Motors предложили жить на автозаводе', text='В Китае произошла очередная вспышка коронавируса. Власти большинства городов вводят новые ограничения, а также изолируют целые регионы. В связи с этим руководство концерна General Motors предложила рабочим своего предприятия в Шанхае временно проживать прямо на территории автозавода. По мнению специалистов, подобная мера позволит избежать распространения инфекции среди сотрудников.')
+ 
+Post.objects.get(id=1).postCategory.add(Category.objects.get(id=1))
+Post.objects.get(id=2).postCategory.add(Category.objects.get(id=3)) 
+Post.objects.get(id=3).postCategory.add(Category.objects.get(id=4))
+Post.objects.get(id=3).postCategory.add(Category.objects.get(id=2)) 
+
+
+Comment.objects.create(commentPost=Post.objects.get(id=1), commentUser=Author.objects.get(id=1).authorUser, text='Может стоит разобраться?')
+Comment.objects.create(commentPost=Post.objects.get(id=2), commentUser=Author.objects.get(id=2).authorUser, text='Где-то я это слышал)')
+Comment.objects.create(commentPost=Post.objects.get(id=3), commentUser=Author.objects.get(id=1).authorUser, text='not good')
+Comment.objects.create(commentPost=Post.objects.get(id=3), commentUser=Author.objects.get(id=2).authorUser, text='Вот это поворот!')
+
+Post.objects.get(id=1).like() 
+Post.objects.get(id=2).like() 
+Post.objects.get(id=3).like() 
+Post.objects.get(id=3).like() 
+Post.objects.get(id=1).like() 
+Post.objects.get(id=2).like()                                                                                                        
+Post.objects.get(id=2).like() 
+Post.objects.get(id=3).like()                                                                                                        
+Post.objects.get(id=1).dislike() 
+Post.objects.get(id=2).dislike() 
+Comment.objects.get(id=1).like() 
+Comment.objects.get(id=1).like() 
+Comment.objects.get(id=2).like() 
+Comment.objects.get(id=3).like() 
+Comment.objects.get(id=4).like() 
+Comment.objects.get(id=4).dislike() 
+Comment.objects.get(id=1).dislike() 
+Comment.objects.get(id=2).dislike() 
+
+
+author1.update_rating()
+author2.update_rating()
+author1.ratingAuthor
+author2.ratingAuthor
+
+
+a = Author.objects.order_by('-ratingAuthor')
+a = Author.objects.order_by('-ratingAuthor')[:1] 
+for i in a: 
+     i.ratingAuthor 
+     i.authorUser.username 
+	 
+	 
+b = Post.objects.order_by('-rating')	 
+b = Post.objects.order_by('-rating')[:1]
+
+for i in b: 
+	i.dateCreation 
+	i.author.authorUser.username
+	i.rating
+	i.title
+	i.text[0:64] 
+	
+c = Comment.objects.filter(commentPost_id=b) 
+
+for i in c:                
+    i.dateCreation                       
+    i.commentUser.username 
+    i.rating 
+    i.text 
